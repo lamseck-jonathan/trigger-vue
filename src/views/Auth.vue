@@ -1,5 +1,5 @@
 <template>
-    <div class="row h-full w-full">
+    <div class="row h-full w-full m-0 p-0">
         <div class="col-lg-5 col-xs-12 p-4 left-side flex-center--all flex-column">
             <div class="description" v-once>
                 <h1 class="mb-4 fs-1 fw-bold text-uppercase" v-text="project.title"></h1>
@@ -68,10 +68,6 @@ export default {
 </script>
 
 <style scoped>
-.row > * {
-    padding-right: 0px;
-}
-
 .flex-center--all {
 display: flex;
 align-content: center;
