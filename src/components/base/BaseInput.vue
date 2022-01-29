@@ -1,6 +1,7 @@
 <template>
     <div :class="classArray">
         <label
+            v-if="label"
             :for="label" 
             class="form-label"
         >
@@ -12,6 +13,7 @@
             :value="modelValue"
             :placeholder="placeholder"
             :autocomplete="autocomplete"
+            :readonly="readonly"
             class="form-control"
             @input="$emit('update:modelValue', $event.target.value)"/>
     </div>
@@ -27,7 +29,7 @@ export default {
 
         label: {
             type: String,
-            required: true
+            default: ''
         },
 
         placeholder: {
@@ -48,6 +50,11 @@ export default {
         autocomplete: {
             type: String,
             default: 'off'
+        },
+
+        readonly: {
+            type: Boolean,
+            default: false
         },
 
         modelValue: String,

@@ -2,6 +2,8 @@
     <button
         :class="classArray"
         :type="type"
+        :data-bs-toggle="dataBsToggle"
+        :data-bs-target="dataBsTarget"
     >
         <slot>default</slot>
     </button>
@@ -31,6 +33,16 @@ export default {
         },
 
         class: {
+            type: String,
+            default: ''
+        },
+
+        dataBsToggle: {
+            type: String,
+            default: ''
+        },
+
+        dataBsTarget: {
             type: String,
             default: ''
         }

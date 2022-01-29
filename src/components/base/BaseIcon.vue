@@ -2,6 +2,8 @@
     <i 
         :class="classArray"
         :style="{color, fontSize: size}"
+        :data-bs-toggle="dataBsToggle"
+        :data-bs-target="dataBsTarget"
     ></i>
 </template>
 
@@ -21,6 +23,16 @@ export default {
             default: ''
         },
         size: {
+            type: String,
+            default: ''
+        },
+        
+        dataBsToggle: {
+            type: String,
+            default: ''
+        },
+
+        dataBsTarget: {
             type: String,
             default: ''
         }
