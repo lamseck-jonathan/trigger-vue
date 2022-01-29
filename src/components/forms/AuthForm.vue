@@ -40,17 +40,7 @@
 </template>
 
 <script>
-import BaseInput from '../base/BaseInput.vue'
-import BaseSwitch from '../base/BaseSwitch.vue'
-import BaseButton from '../base/BaseButton.vue'
-
 export default {
-    components: {
-        BaseInput,
-        BaseSwitch,
-        BaseButton,
-    },
-
     emits: ['submit'],
 
     props: {
