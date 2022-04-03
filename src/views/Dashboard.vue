@@ -1,23 +1,18 @@
 <template>
-  <div class="wh-full d-flex">
-    <the-side-bar></the-side-bar>
-    <div class="wh-full">
-      <the-nav-bar></the-nav-bar>
-      <div class="container pt-2">
-        <h1>Dashboard</h1>
-      </div>
+  <div class="wh-full">
+    <the-nav-bar></the-nav-bar>
+    <div class="container pt-4">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import TheNavBar from '../components/navigations/TheNavBar.vue'
-import TheSideBar from '../components/navigations/TheSideBar.vue'
 
 export default {
   components: {
-    TheNavBar,
-    TheSideBar
+    TheNavBar
   }  
 }
 </script>
