@@ -29,15 +29,13 @@
 </template>
 
 <script>
-import BaseButton from '../components/base/BaseButton.vue'
 import AuthForm from '../components/forms/AuthForm.vue'
+import { mapMutations } from 'vuex'
 
 export default {
     components: {
-        BaseButton,
         AuthForm
     },
-
     data () {
         return {
             isRegister: false,
@@ -60,8 +58,51 @@ export default {
     },
 
     methods: {
-        onAuthFormSubmit (e) {
-            console.log('USER_INFO', e)
+        ...mapMutations([
+            'setUser',
+            'setToken'
+        ]),
+
+        onAuthFormSubmit (userData) {
+            if(this.authFormType == 'login') {
+                this.axios.post('login', {
+                    name: userData.name,
+                    password: userData.password
+                }).then(res => {
+                    let token = res.data.data
+                    this.setToken(token)
+                    this.setUser(userData.name)
+                    this.$router.push({ name: 'Vendeurs' })
+                }).catch(err => alert(err))
+                
+            } else {
+                let isAdmin = userData.isAdmin ? 1 : 0
+                console.log({
+                        name: userData.name,
+                        password: userData.password,
+                        isAdmin: isAdmin
+                    })
+                this.axios.post(
+                    'register', 
+                    {
+                        name: userData.name,
+                        password: userData.password,
+                        isAdmin: isAdmin
+                    }
+                ).then(res => {
+                    let token = res.data.data
+                    this.setToken(token)
+                    this.setUser(userData.name)
+                    this.$router.push({ name: 'Vendeurs' })
+                }).catch(err => alert(err))
+
+            }
+        }
+    },
+
+    beforeMount() {
+        if(this.$store.getters.isAuthenticated) {
+            this.$router.push({ name: 'Vendeurs' })
         }
     }
 }
