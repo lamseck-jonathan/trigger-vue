@@ -14,6 +14,7 @@
             :placeholder="placeholder"
             :autocomplete="autocomplete"
             :readonly="readonly"
+            :min="parseInt(min)"
             class="form-control"
             @input="$emit('update:modelValue', $event.target.value)"/>
     </div>
@@ -52,12 +53,19 @@ export default {
             default: 'off'
         },
 
+        min: {
+            type: String,
+            default: '0'
+        },
+
         readonly: {
             type: Boolean,
             default: false
         },
 
-        modelValue: String,
+        modelValue: {
+            default: null
+        },
     },
 
     emits: ['update:modelValue'],

@@ -9,6 +9,7 @@ html, body, #app {
 }
 
 #app {
+  color: #3d3d3d;
   background-color: #f4f9ff;
 }
 </style>
