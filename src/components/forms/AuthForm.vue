@@ -9,6 +9,10 @@
             v-model="user.name"
             required
         />
+        <span class="error-msg" v-if="v$.user.name.$error">
+            {{ v$.user.name.$errors[0].$message }}
+        </span>
+
         <base-input
             type="password"
             label="mot de passe"
@@ -16,6 +20,10 @@
             class="mt-4"
             v-model="user.password"
         />
+        <span class="error-msg" v-if="v$.user.password.$error">
+            {{ v$.user.password.$errors[0].$message }}
+        </span>
+
         <base-input
             v-show="type === 'register'"
             type="password"
@@ -24,15 +32,20 @@
             class="mt-4"
             v-model="user.confirmedPassword"
         />
+        <span class="error-msg" v-if="type === 'register' && v$.user.confirmedPassword.$error">
+            {{ v$.user.confirmedPassword.$errors[0].$message }}
+        </span>
+
         <base-switch
             v-show="type === 'register'"
             label="Administrateur"
             class="mt-4"
             v-model="user.isAdmin"
         />
+
         <base-button
             class="mt-5 mb-4"
-            @click="$emit('submit', user)"
+            @click="onSubmit"
         >
             {{type === 'register' ? 'Créer un compte' : 'Se connecter'}}
         </base-button>
@@ -40,6 +53,9 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core'
+import { required, minLength, sameAs } from '@vuelidate/validators'
+
 export default {
     emits: ['submit'],
 
@@ -53,11 +69,40 @@ export default {
 
     data () {
         return {
+            v$: useVuelidate(),
             user: {
                 name: '',
                 password: '',
                 confirmedPassword: '',
                 isAdmin: false
+            }
+        }
+    },
+
+    methods: {
+        onSubmit () {
+            this.v$.$validate()
+            if(!this.v$.$error) {
+                this.$emit('submit', this.user)
+            }
+        }
+    },
+
+    validations () {
+        if(this.type === 'register') {
+            return {
+                user: {
+                    name: { required },
+                    password: { required, minLength: minLength(6) },
+                    confirmedPassword: { required, sameAs: sameAs(this.user.password) },
+                }
+            }
+        } else {
+            return {
+                user: {
+                    name: { required },
+                    password: { required },
+                }
             }
         }
     }
@@ -67,5 +112,10 @@ export default {
 <style scoped>
 .text-color--blue {
     color: #1563C3;
+}
+
+.error-msg {
+    color: #db2727;
+    font-size: 0.8rem;
 }
 </style>
