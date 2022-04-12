@@ -28,7 +28,8 @@
     </div>
 
     <div class="tab-item row shadow-sm py-3 px-2 mb-1 rounded" style="background-color: #fcfcfc" 
-    v-for="recetteVendeur in recetteVendeurs" :key="recetteVendeur.id">
+        v-for="recetteVendeur in recetteVendeurs" :key="recetteVendeur.id"
+    >
         <div class="col-3">{{ recetteVendeur.vd_id }}</div>
         <div class="col-3">{{ recetteVendeur.rc_date }}</div>
         <div class="col-3">{{ recetteVendeur.rc_montant }} Ar</div>
@@ -132,22 +133,19 @@ export default {
             }).catch((err) => alert(err))
         },
         addRecetteVendeur() {
-            console.log(this.recetteVendeurData.rc_date)
-            console.log(this.recetteVendeurData.vd_id)
-            console.log(this.recetteVendeurData.rc_montant)
-                this.axios.post(
-                    "recette/vendeurs",
-                    {
-                        vd_id : this.recetteVendeurData.vd_id,
-                        rc_montant : this.recetteVendeurData.rc_montant,
-                        rc_date : this.recetteVendeurData.rc_date,
-                    },
-                    { headers: { 'Authorization': 'Bearer ' + this.getToken }}).then((res) => {
-                        let { data } = res.data
-                        this.recetteVendeurs.push(data)
-                        this.resetRecetteVendeurForm()
-                    }).catch((error) => alert(error))
-            },
+            this.axios.post(
+                "recette/vendeurs",
+                {
+                    vd_id : this.recetteVendeurData.vd_id,
+                    rc_montant : this.recetteVendeurData.rc_montant,
+                    rc_date : this.recetteVendeurData.rc_date,
+                },
+                { headers: { 'Authorization': 'Bearer ' + this.getToken }}
+            ).then((res) => {
+                this.recetteVendeurs.push(res.data)
+                this.resetRecetteVendeurForm()
+            }).catch((error) => alert(error))
+        },
         fillEditRecetteVendeurModal(recette) {
             this.recetteVendeurData.id = recette.id.toString()
             this.recetteVendeurData.vd_id = recette.vd_id.toString()
